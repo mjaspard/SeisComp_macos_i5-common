@@ -176,8 +176,8 @@ void AdvancedOriginSymbol::setConfidenceEllipse(double major, double minor,
 	_confidenceEllipse.resize(points);
 
 	double sinAzi, cosAzi, sinLat, cosLat;
-	sincos(deg2rad(90 - azimuth), &sinAzi, &cosAzi);
-	sincos(deg2rad(latitude()), &sinLat, &cosLat);
+	__sincos(deg2rad(90 - azimuth), &sinAzi, &cosAzi);
+	__sincos(deg2rad(latitude()), &sinLat, &cosLat);
 
 	// calculate geo coordinates on confidence ellipse with theta being the
 	// angle on the unrotated standard ellipse and incTheta the increment
@@ -190,7 +190,7 @@ void AdvancedOriginSymbol::setConfidenceEllipse(double major, double minor,
 
 		// calculate point on standard ellipse and distance to origin in km
 		double x, y;
-		sincos(theta, &y, &x);
+		__sincos(theta, &y, &x);
 		x *= major; y *= minor;
 		double dist = hypot(x, y);
 
@@ -202,7 +202,7 @@ void AdvancedOriginSymbol::setConfidenceEllipse(double major, double minor,
 		// distance from the ellipse origin
 		double delta = dist / radius;
 		double sinDelta, cosDelta;
-		sincos(delta, &sinDelta, &cosDelta);
+		__sincos(delta, &sinDelta, &cosDelta);
 
 		// latitude: arcsin only defined within [-1, 1]
 		y = cosDelta * sinLat + (yAzi * sinDelta * cosLat / dist);
